@@ -46,6 +46,8 @@ app.get("/user/:id/:start/:end", (req, res) => {
   console.log("user ID: ", user_id);
   console.log("start ID: ", start);
   console.log("user ID: ", end);
+
+  res.send("파람스 정상 동작중");
 });
 
 app.listen(port, () => {
