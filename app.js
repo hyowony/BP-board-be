@@ -81,6 +81,54 @@ app.get("/showone", (req, res) => {
   console.log("contents", contents);
 });
 
+/// 게시물 작성  실패 - 데이터가 잘 들어와서 콘솔로그에 찍힌 게 이 데이터를 어딘가에 저장을 해주는 것이다.
+// 가상의 디비로 사용하려고 만듦
+const list = [];
+
+app.post("/mpost", (req, res) => {
+  //title, contents만 받아온다.- 정상작동
+
+  const { title, contents } = req.body;
+  const post = { title, contents };
+  //객체구조분해할당 해서 데이터 잘 들어오는 것까진 확인
+  console.log(post);
+  // list.extend(post);
+  console.log("title", title);
+  console.log("contents", contents);
+  res.json(list);
+});
+
+/// 게시물 수정
+
+//어 잠깐만 :postId의 값을 1로 바꾸니까 postId가 1로 바뀌네?.. 이게 patch 때문인가 원래 파람스 기능인가?
+
+app.patch("/posts/patch/:postId", (req, res) => {
+  const { postId } = req.params;
+  const { contents, nickname, password } = req.body;
+
+  console.log("PostId", postId);
+  console.log("contents", contents);
+  console.log("nickname", nickname);
+  console.log("password", password);
+
+  res.send("잘 수정했다.");
+});
+
+///게시물 삭제 - 등록된 글을 지워줘야 하니까 post number? 일련번호를 가져와서 지우면 되겠군
+
+app.delete("/posts/delete/:postId", (req, res) => {
+  /// 생각해보니까 내 블로그에도 게시물 다음에 /111 이런식으로 되어있던데 이걸 불러오면 되지 않을까 :postId로 소환할 수 있게끔 만들자
+  const { postId } = req.params;
+  const { id, title, nickname } = req.body;
+
+  console.log("postId", postId);
+  console.log("id", id);
+  console.log("title", title);
+  console.log("nickname", nickname);
+
+  res.json("게시글이 삭제되었습니다.");
+});
+
 app.listen(3000, () => {
   console.log(port, "서버가 열렸습니다");
 });
