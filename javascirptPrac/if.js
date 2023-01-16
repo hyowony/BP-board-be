@@ -17,10 +17,9 @@ const age = 35;
 
 if (age < 30) {
   console.log("효원이보다 어리네?");
-} else if (age > 31) {
-  console.log("아냐 나이 더 많아");
-} else {
-  age === 35;
+  // } else if (age > 31) {
+  //   console.log("아냐 나이 더 많아");
+} else if (age === 35) {
   console.log("만 나이로 동갑입니다");
 }
 
