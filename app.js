@@ -81,7 +81,7 @@ app.get("/showone", (req, res) => {
   console.log("contents", contents);
 });
 
-/// 게시물 작성  실패 - 데이터가 잘 들어와서 콘솔로그에 찍힌 게 이 데이터를 어딘가에 저장을 해주는 것이다.
+/// 게시물 작성  성공 - 데이터가 잘 들어와서 콘솔로그에 찍힌 게 이 데이터를 어딘가에 저장을 해주는 것이다.
 // 가상의 디비로 사용하려고 만듦
 const list = [];
 
@@ -92,7 +92,8 @@ app.post("/mpost", (req, res) => {
   const post = { title, contents };
   //객체구조분해할당 해서 데이터 잘 들어오는 것까진 확인
   console.log(post);
-  // list.extend(post);
+  //push로 list 배열에 바로 넣어준다.
+  list.push(post);
   console.log("title", title);
   console.log("contents", contents);
   res.json(list);
