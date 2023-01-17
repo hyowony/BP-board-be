@@ -211,4 +211,5 @@ console.log(CallEmailone)
 const showemailone = users.find(user=> user.id === CallEmailone.user_id)
 //유저스에서 찾아라 user.id는 call함수의 user_id와 일치하는 것을 
 
+console.log(showemailone)
 console.log(showemailone.email)
