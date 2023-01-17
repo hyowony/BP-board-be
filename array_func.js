@@ -98,7 +98,7 @@ const scores = [
  
 // const list = goHomeMembers.map((goHomeMembers) => goHomeMembers.name);
 
-// //2. 그 거른 값을 list라는 값을 만들고 거기다 다시 쪼개서 이름만? 배열한다.
+// // //2. 그 거른 값을 list라는 값을 만들고 거기다 다시 쪼개서 이름만? 배열한다.
 
 // console.log(list)
 
@@ -111,11 +111,12 @@ const scores = [
 // 1. find해서 지영의 이름을 찾는다 2. 베스트 플레이어의 점수만을 보고 싶다면 객체 안에 접속해서 score을 찍어준다. 
 // * find는 배열을 반환해주는 것이 아니라 배열의 요소를 반환해준다. MDN < 사이트 참고. 
 
-const bestplayer = scores.find(score=> score.name === "지영")
-// 1. 지영이라는 이름을 찾아서 베스트 플레이어라는 값에 담아준다.
-console.log(bestplayer)
-//2. 값을 제대로 찾아서 담아왔다
-console.log("detailscore:", bestplayer.score)
+// const bestplayer = scores.find(score=> score.name === "지영")
+// // 1. 지영이라는 이름을 찾아서 베스트 플레이어라는 값에 담아준다.
+// console.log(bestplayer)
+// //2. 값을 제대로 찾아서 담아왔다
+// console.log("detailscore:", bestplayer.score)
+// console.log("title.", bestplayer.mbti)
 //3. 이제 상세 점수라는 코멘트를 달아주고 찾은 베스트 플레이어의 점수만 콕 찝어서 들어간다. 
 
 // const ds = bestplayer.map((bestplayer) => bestplayer.score);
@@ -161,9 +162,39 @@ const users = [
 
 /// 4-1 모든 movies를 반환하는 개발, 단 movies를 작성한 user의 이름을 포함
 
-const movieUser = movies.map(movies => (
-  {...movie,
-  name : users.find(user => user.id === movie.user_id).name,
-}
-));
-console.log(movieUser)
+
+// const movieUser = movies.map(movies=> a.name )
+// console.log(movies)
+
+ const Mpu = movies.map((movie) => {
+    // movies 를 반복 돌게함
+
+    const AddNameList = users.filter((user) => {
+      // users를 반복 돌게하면서 movie 의 user_id랑 user.id 참조 
+      if (movie.user_id === user.id) {
+        return true;
+      }
+    }); // 배열로 반환됨
+    return {
+      id: movie.id,
+      movie_title: movie.movie_title,
+      hit_count: movie.hit_count,
+      user_id: movie.user_id,
+      created_at: movie.created_at,
+      name: AddNameList[0].name,
+      ///해당 양식에 ADDNameList를 통과해서 넣어준다.
+    };
+  });
+  console.log(Mpu);
+
+  //// 과제 4-2번 -성공
+
+const selectTitles = Mpu.filter(titles =>titles.user_id === 1)
+//mpu 함수에서 user_id가 1인 친구들을 찾는다 
+
+console.log(selectTitles)
+//잘 찍혔나 찍어본다 음 잘 찍혔군
+const breakdowntitle = selectTitles.map(selectTitles => selectTitles.movie_title)
+// user_id === 1 인 친구들의 제목만 불러오자
+console.log(breakdowntitle)
+//성공!!!!!! 와!
