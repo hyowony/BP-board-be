@@ -45,7 +45,10 @@ const users = [
 
 
 
-
+// 1. 영화 전체 목록을 순회한다.
+// 2. 순회 하면서 영화 제목 작성자 (user_id) 에 해당하는 user를 users 에서 검색한다
+// 3. 2번에 일치하는 user 의 name 만 가져온다
+// 4. 가져온 name을 순회중 movie 의 name property 에 추가한다.
 
 
 app.get('/movies', (req, res) => {
@@ -54,6 +57,14 @@ app.get('/movies', (req, res) => {
     name: users.find(user => user.id === movie.user_id)
   })))
 })
+
+// 1. 사용자가 등록할 영화의 정보를 주면 받아온다 from 요청 (req)
+// 2. 가져온 영화정보에 id 를 부여한다.
+// 3. 조회수 (hit_count) 는 기본으로 0으로 설정한다.
+// 4. 작성일은 현재 시각을 넣는다.
+// 3. 2,3,4 전부 부여된 영화정보를 movies 추가한다
+
+
 app.post('/movies', (req, res) => {
 
 
@@ -61,16 +72,58 @@ app.post('/movies', (req, res) => {
   newMovie.id = movies[movies.length - 1].id + 1
   newMovie.hit_count = 0
   newMovie.created_at = new Date(). toISOString()
-  //1. 사용자가 등록할 영화의 정보를 주면 받아온다 from 요청 (req)
-    // -
-  //2. 가져온 영화정보에 id를 부여한다.
-  //3. 조회수 (hit_count)는 기본으로 0으로 설정한다.
-  //4. 작성일은 현재 시간을 넣는다.
-  //5. 2, 3, 4 부여된 영화정보를 movies에 추가한다.
+  
   movies.push(newMovie)
   console.log(movies)
   res.send("무비 등록")
 })
+
+//과제 
+
+// 1. 사용자가 보내준 id 를 가져온다
+// 2. id 에 해당하는 movie 를 가져온다
+// 3. 가져온 movie 에서 hit_count 1을 더한 객체를 만든다
+// 4. hit_count 1을 더한 객체를 movies 내에서 기존 객체에 치환한다. (findIndex, splice 사용)
+// 5. hit_count 1을 더한 객체를 반환한다.
+
+app.get("/movies/:id", (req,res)=> {
+  
+
+  const id = req.params.id
+  // 1. 사용자가 보내준 id를 가져온다. 
+  console.log(id)
+// 2. id에 해당하는 movies를 가져온다. 
+  const getobj =  movies.find(movie => {return movie.id ===   Number(id) })
+  // 파람스를 통해 지정해준 숫자를 가져오는 구문 
+  //NUM는 형 변환을 시킨 것이다. params로 가져오는 데이터 값은 string인데 num을 써서 int로 바꿔준것이다. 
+  // console.log(getobj)
+
+  //3. 가져온 movies에서 hit_count 1을 더한 객체를 만든다
+
+  getobj.hit_count = getobj.hit_count +1
+
+  // console.log(getobj)
+
+  //4. 히트카운트 1을 더한 객체를 무비스 내에서 기존 객체에 치환한다. 
+
+  const movieindex = movies.findIndex(movie => movie.id === Number(id))
+
+  movies.splice(movieindex,1,getobj)
+  ///
+
+  console.log(movies)
+
+  ///5. hit_count 1을 더한 객체를 반환한다. 
+
+  res.send(getobj)
+
+  // console.log(movieindex)
+
+  
+
+}) 
+
+
 app.listen(port, () => {
   console.log("서버 연결완료 ")
 })
