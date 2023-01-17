@@ -80,3 +80,6 @@ let t = test1.length === 0 ? "배열 비었어" : "배열에 뭐 있는데?";
 console.log(t);
 
 //결국 변수값이 다르지만 해당 로직은 같은 의미를 삼항연산자를 써서 축약했느냐 아니냐의 차이이기 때문에 "배열비었어"라는 두 개의 리턴값을 받게되는 것이다.
+
+const resultScores = scores.map((score) => ({   ...score,   subName: users.find((user) => user.id === 4).subName, }));
+//무현님께서 작성해주신 코드 

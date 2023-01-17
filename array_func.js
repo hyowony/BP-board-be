@@ -92,15 +92,15 @@ const scores = [
 
 // //과제 2번 완성코드 
 
-// const goHomeMembers = scores.filter(score => score.score < 40)
-// console.log(goHomeMembers)
-// //1. 40점 이하인 사람들을 쪼개서 일단 한번 거른다.제대로 걸러졌는지 확인 완료
+const goHomeMembers = scores.filter(score => score.score < 40)
+console.log(goHomeMembers)
+//1. 40점 이하인 사람들을 쪼개서 일단 한번 거른다.제대로 걸러졌는지 확인 완료
  
-// const list = goHomeMembers.map((goHomeMembers) => goHomeMembers.name);
+const list = goHomeMembers.map((goHomeMembers) => goHomeMembers.name);
 
-// // //2. 그 거른 값을 list라는 값을 만들고 거기다 다시 쪼개서 이름만? 배열한다.
+// //2. 그 거른 값을 list라는 값을 만들고 거기다 다시 쪼개서 이름만? 배열한다.
 
-// console.log(list)
+console.log(list)
 
 // const resultScores = scores.map((score) => score.name);
 // for(let i = 0; i < goHomeMembers.length; i++)
@@ -111,11 +111,11 @@ const scores = [
 // 1. find해서 지영의 이름을 찾는다 2. 베스트 플레이어의 점수만을 보고 싶다면 객체 안에 접속해서 score을 찍어준다. 
 // * find는 배열을 반환해주는 것이 아니라 배열의 요소를 반환해준다. MDN < 사이트 참고. 
 
-// const bestplayer = scores.find(score=> score.name === "지영")
-// // 1. 지영이라는 이름을 찾아서 베스트 플레이어라는 값에 담아준다.
-// console.log(bestplayer)
-// //2. 값을 제대로 찾아서 담아왔다
-// console.log("detailscore:", bestplayer.score)
+const bestplayer = scores.find(score=> score.name === "지영")
+// 1. 지영이라는 이름을 찾아서 베스트 플레이어라는 값에 담아준다.
+console.log(bestplayer)
+//2. 값을 제대로 찾아서 담아왔다
+console.log("detailscore:", bestplayer.score)
 // console.log("title.", bestplayer.mbti)
 //3. 이제 상세 점수라는 코멘트를 달아주고 찾은 베스트 플레이어의 점수만 콕 찝어서 들어간다. 
 
@@ -166,6 +166,8 @@ const users = [
 // const movieUser = movies.map(movies=> a.name )
 // console.log(movies)
 
+//Mpu작명 뜻  = Movie plus users
+
  const Mpu = movies.map((movie) => {
     // movies 를 반복 돌게함
 
@@ -198,3 +200,15 @@ const breakdowntitle = selectTitles.map(selectTitles => selectTitles.movie_title
 // user_id === 1 인 친구들의 제목만 불러오자
 console.log(breakdowntitle)
 //성공!!!!!! 와!
+
+// 과제 4-3번 
+const CallEmailone = Mpu.find(one => one.movie_title === "Looney Tunes: Back in Action")
+//제목이 일치하는 걸로 찾아오기 
+
+console.log(CallEmailone)
+//잘 띄우나 확인 잘 가져왓군 
+
+const showemailone = users.find(user=> user.id === CallEmailone.user_id)
+//유저스에서 찾아라 user.id는 call함수의 user_id와 일치하는 것을 
+
+console.log(showemailone.email)
