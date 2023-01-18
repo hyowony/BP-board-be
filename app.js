@@ -55,7 +55,7 @@ app.get('/movies', (req, res) => {
   res.send(movies.map(movie => ({
     ...movie,
     //1. 영화 전체 목록을 순회한다. 
-    name: users.find(user => user.id === movie.user_id)
+    name: users.find(user => user.id === movie.user_id).name
     // 2. 순회하면서  영화 제목 작성자에 user_id에 해당하는 user를 users에서 검색한다. 
     // 3  2번에 일치하는 user의 name만 가져온다. 
     // 4.  가져온 name을 순회중인 movies의 name property에 추가한다. 
@@ -78,13 +78,14 @@ app.post('/movies', (req, res) => {
   //2. 가져온 영화정보에 id를 부여한다. 
   newMovie.hit_count = 0
   // 3. 조회수는 기본값으로 0을 부여한다. 
-  newMovie.created_at = new Date(). toISOString()
+  newMovie.created_at = new Date().toISOString()
   //4. 작성일은 현재 시각을 넣는다 new DATE(). toIsoString을 이용한다..  
   
   movies.push(newMovie)
   // 5. 배열에 넣을때는 push를 이용한다. 결국 movies 배열에 우리가 설정한 newMovies를 넣어주는 작업인것이다.
-  console.log(movies)
-  res.send("영화가 등록되었습니다")
+  console.log(newMovie)
+  res.send(newMovie)
+  //res.send(newMovie)는 적어줘야지 조회수가 올라간다. 
 })
 
 //과제 
