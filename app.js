@@ -54,7 +54,11 @@ const users = [
 app.get('/movies', (req, res) => {
   res.send(movies.map(movie => ({
     ...movie,
+    //1. 영화 전체 목록을 순회한다. 
     name: users.find(user => user.id === movie.user_id)
+    // 2. 순회하면서  영화 제목 작성자에 user_id에 해당하는 user를 users에서 검색한다. 
+    // 3  2번에 일치하는 user의 name만 가져온다. 
+    // 4.  가져온 name을 순회중인 movies의 name property에 추가한다. 
   })))
 })
 
@@ -62,20 +66,25 @@ app.get('/movies', (req, res) => {
 // 2. 가져온 영화정보에 id 를 부여한다.
 // 3. 조회수 (hit_count) 는 기본으로 0으로 설정한다.
 // 4. 작성일은 현재 시각을 넣는다.
-// 3. 2,3,4 전부 부여된 영화정보를 movies 추가한다
+// 5. 2,3,4 전부 부여된 영화정보를 movies 추가한다
 
 
 app.post('/movies', (req, res) => {
 
 
   const newMovie = req.body
+  //1. 사용자가 등록할 영화의 정보를 주면 받아온다. 
   newMovie.id = movies[movies.length - 1].id + 1
+  //2. 가져온 영화정보에 id를 부여한다. 
   newMovie.hit_count = 0
+  // 3. 조회수는 기본값으로 0을 부여한다. 
   newMovie.created_at = new Date(). toISOString()
+  //4. 작성일은 현재 시각을 넣는다 new DATE(). toIsoString을 이용한다..  
   
   movies.push(newMovie)
+  // 5. 배열에 넣을때는 push를 이용한다. 결국 movies 배열에 우리가 설정한 newMovies를 넣어주는 작업인것이다.
   console.log(movies)
-  res.send("무비 등록")
+  res.send("영화가 등록되었습니다")
 })
 
 //과제 
@@ -109,7 +118,8 @@ app.get("/movies/:id", (req,res)=> {
   const movieindex = movies.findIndex(movie => movie.id === Number(id))
 
   movies.splice(movieindex,1,getobj)
-  ///
+  /// 배열. splice(작업 위치, 위치로부터 몇 칸 이동했냐, 끼워넣을 것 )
+  // 무비스에서 무비인덱스에서 작업하고 위치로부터 1칸이고 getobj로 새로 교체해라 
 
   console.log(movies)
 
