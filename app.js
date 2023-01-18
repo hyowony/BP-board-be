@@ -72,19 +72,19 @@ app.get('/movies', (req, res) => {
 app.post('/movies', (req, res) => {
 
 
-  const newMovie = req.body
+  const enrollMovie = req.body
   //1. 사용자가 등록할 영화의 정보를 주면 받아온다. 
-  newMovie.id = movies[movies.length - 1].id + 1
+  enrollMovie.id = movies[movies.length - 1].id + 1
   //2. 가져온 영화정보에 id를 부여한다. 
-  newMovie.hit_count = 0
+  enrollMovie.hit_count = 0
   // 3. 조회수는 기본값으로 0을 부여한다. 
-  newMovie.created_at = new Date().toISOString()
+  enrollMovie.created_at = new Date().toISOString()
   //4. 작성일은 현재 시각을 넣는다 new DATE(). toIsoString을 이용한다..  
   
-  movies.push(newMovie)
+  movies.push(enrollMovie)
   // 5. 배열에 넣을때는 push를 이용한다. 결국 movies 배열에 우리가 설정한 newMovies를 넣어주는 작업인것이다.
-  console.log(newMovie)
-  res.send(newMovie)
+  console.log(enrollMovie)
+  res.send(enrollMovie)
   //res.send(newMovie)는 적어줘야지 조회수가 올라간다. 
 })
 
