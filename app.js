@@ -1,11 +1,13 @@
 const express = require("express")
 const app = express()
 const port = 3100
+const cors = require("cors")
 
 const cookieParser = require("cookie-parser")
 
 app.use(express.json())
 app.use(cookieParser())
+app.use(cors())
 
 const movies = [
   {id: 1, movie_title: "Misérables, Les", hit_count: 23, user_id: 1, created_at: "2022-08-11 00:40:32"},
@@ -130,11 +132,15 @@ app.get("/movies/:id", (req,res)=> {
 
   // console.log(movieindex)
 
+  app.get("/", (req,res)=> {
+    
+  })
+
   
 
 }) 
 
 
 app.listen(port, () => {
-  console.log("서버 연결완료 ")
+  console.log(port, "서버 연결완료 ")
 })
