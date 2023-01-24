@@ -54,14 +54,20 @@ const users = [
 
 
 app.get('/movies', (req, res) => {
-  res.send(movies.map(movie => ({
+  const sortlist = movies.map(movie => ({
     ...movie,
     //1. 영화 전체 목록을 순회한다. 
     name: users.find(user => user.id === movie.user_id).name
     // 2. 순회하면서  영화 제목 작성자에 user_id에 해당하는 user를 users에서 검색한다. 
     // 3  2번에 일치하는 user의 name만 가져온다. 
     // 4.  가져온 name을 순회중인 movies의 name property에 추가한다. 
-  })))
+  }))
+//내림차순으로 정렬한다. 
+  sortlist.sort ((a,b) => {
+    return b.id - a. id
+  });
+  res.send(sortlist)
+
 })
 
 // 1. 사용자가 등록할 영화의 정보를 주면 받아온다 from 요청 (req)
