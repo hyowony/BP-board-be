@@ -5,8 +5,8 @@ const cors = require("cors")
 
 const cookieParser = require("cookie-parser")
 
-app.use(express.json())
-app.use(cookieParser())
+// app.use(express.json())
+// app.use(cookieParser())
 app.use(cors())
 
 const movies = [
@@ -110,6 +110,27 @@ const movies = [
   {id: 98, movie_title: "Last Circus, The (Balada triste de trompeta) (Sad Trumpet Ballad, A)", hit_count: 55, user_id: 1, created_at: "2022-03-24 06:27:21"},
   {id: 99, movie_title: "Power and Terror: Noam Chomsky in Our Times", hit_count: 85, user_id: 3, created_at: "2022-04-30 19:43:43"},
   {id: 100, movie_title: "Grumpy Cat's Worst Christmas Ever", hit_count: 58, user_id: 9, created_at: "2022-12-13 00:46:27"},
+  {id: 101, movie_title: "Misérables, Les", hit_count: 23, user_id: 1, created_at: "2022-08-11 00:40:32"},
+  {id: 102, movie_title: "she's gone ", hit_count: 62, user_id: 2, created_at: "2022-08-18 16:43:05"},
+  {id: 103, movie_title: "Captain Ron", hit_count: 1, user_id: 1, created_at: "2022-08-14 18:09:47"},
+  {id: 104, movie_title: "Siberia", hit_count: 37, user_id: 9, created_at: "2022-02-08 02:44:29"},
+  {id: 105, movie_title: "Girl, The", hit_count: 82, user_id: 6, created_at: "2022-08-29 00:02:21"},
+  {id: 106, movie_title: "44 Minutes: The North Hollywood Shoot-Out", hit_count: 2, user_id: 4, created_at: "2022-12-06 20:33:12"},
+  {id: 107, movie_title: "C'mon Man", hit_count: 62, user_id: 2, created_at: "2022-08-18 16:43:05"},
+  {id: 108, movie_title: "Jim Jefferies: Alcoholocaust", hit_count: 4, user_id: 8, created_at: "2022-07-05 16:49:03"},
+  {id: 109, movie_title: "Grand Budapest Hotel, The", hit_count: 35, user_id: 9, created_at: "2022-01-10 08:22:27"},
+  {id: 110, movie_title: "Ju-on: The Curse 2", hit_count: 64, user_id: 7, created_at: "2022-10-18 21:59:19"},
+  {id: 111, movie_title: "Looney Tunes: Back in Action", hit_count: 17, user_id: 8, created_at: "2022-10-26 06:56:30"},
+  {id: 112, movie_title: "she's gone", hit_count: 91, user_id: 6, created_at: "2022-02-22 11:23:11"},
+  {id: 113, movie_title: "BlinkyTM", hit_count: 4, user_id: 5, created_at: "2022-01-08 21:02:09"},
+  {id: 114, movie_title: "Alien Predator (Mutant II) (Falling, The)", hit_count: 47, user_id: 2, created_at: "2022-02-28 15:55:13"},
+  {id: 115, movie_title: "Lorenzo's Oil", hit_count: 26, user_id: 6, created_at: "2022-01-21 02:46:27"},
+  {id: 116, movie_title: "Beyond Re-Animator", hit_count: 88, user_id: 5, created_at: "2022-04-26 13:44:52"},
+  {id: 117, movie_title: "Mississippi Burning", hit_count: 64, user_id: 8, created_at: "2022-11-14 05:23:58"},
+  {id: 118, movie_title: "Last Circus, The (Balada triste de trompeta) (Sad Trumpet Ballad, A)", hit_count: 55, user_id: 1, created_at: "2022-03-24 06:27:21"},
+  {id: 119, movie_title: "Power and Terror: Noam Chomsky in Our Times", hit_count: 85, user_id: 3, created_at: "2022-04-30 19:43:43"},
+  {id: 120, movie_title: "Grumpy Cat's Worst Christmas Ever", hit_count: 58, user_id: 9, created_at: "2022-12-13 00:46:27"},
+  {id: 121, movie_title: "test", hit_count: 58, user_id: 9, created_at: "2022-12-13 00:46:27"},
 ]
 // 연습용 더미데이터 +80개 추가 
 const users = [
@@ -125,7 +146,8 @@ const users = [
   {id: 10,name: "Kaylee Jakoubec", email: "kjakoubec2i@epa.gov"}
 ]
 
-
+app.use(express.json())
+app.use(cookieParser())
 
 
 // 1. 영화 전체 목록을 순회한다.
@@ -135,7 +157,20 @@ const users = [
 
 
 app.get('/movies', (req, res) => {
-  const sortlist = movies.map(movie => ({
+ 
+const page = req.query.pages ||1
+console.log(page)
+const cloneMovies = [...movies] 
+const dividepage = Math.ceil(movies.length / 10)
+const startIndex = (page - 1) * 10
+const paginationMovies = cloneMovies.splice(startIndex,10)
+
+// console.log("startindex:",startIndex)
+// console.log("lastPage:",dividepage)
+  
+// const pagenationMovies = movies.splice(0,10,[])
+
+  const sortlist = paginationMovies.map(movie => ({
     ...movie,
     //1. 영화 전체 목록을 순회한다. 
     name: users.find(user => user.id === movie.user_id).name
@@ -148,12 +183,16 @@ app.get('/movies', (req, res) => {
     const preTs = new Date(a.created_at).getTime()
     const curTs = new Date(b.created_at).getTime()
 
-    console.log(preTs, "/", curTs)
+    // console.log(preTs, "/", curTs)
 
     return curTs - preTs
   });
 // const Lpage = movies.length / 10
-const dividepage = Math.ceil(movies.length / 10)
+// const dividepage = Math.ceil(movies.length / 10)
+// const startIndex = (page-1) * 10
+
+// console.log("startindex:",startIndex)
+// console.log("lastPage:",dividepage)
 
 // console.log("마지막페이지:", Lpage)
   //res.send는 가장 마지막에 쓴다. 결괏값을 제출하는 것이기 때문에 이것을 앞 줄에 실행해버리면 그 다음 명령은 읽지 못한다.  
