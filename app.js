@@ -158,7 +158,7 @@ app.use(cookieParser())
 
 app.get('/movies', (req, res) => {
  
-const page = req.query.pages ||1
+const page = req.query.page || 1
 console.log(page)
 const cloneMovies = [...movies] 
 const dividepage = Math.ceil(movies.length / 10)
@@ -270,7 +270,7 @@ app.get("/movies/:id", (req,res)=> {
   /// 배열. splice(작업 위치, 위치로부터 몇 칸 이동했냐, 끼워넣을 것 )
   // 무비스에서 무비인덱스에서 작업하고 위치로부터 1칸이고 getobj로 새로 교체해라 
 
-  console.log(movies)
+  // console.log(movies)
 
   ///5. hit_count 1을 더한 객체를 반환한다. 
 
@@ -278,9 +278,9 @@ app.get("/movies/:id", (req,res)=> {
 
   // console.log(movieindex)
 
-  app.get("/", (req,res)=> {
+  // app.get("/", (req,res)=> {
     
-  })
+  // })
 
   
 
