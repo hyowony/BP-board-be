@@ -77,7 +77,7 @@ const currencyBycountry = {
 }
 
 const priceTokrwFormat = (price,country) => {
-  // 이 화살표함수는 프라이스와 컨트리를 두 개의 값을 가지고 놀 것이다. 
+  // 이 화살표함수는 프라이스와 컨트리를 두 개의 값(파라미터)을 가지고 놀 것이다. 
   const countryCode = country || "kr"
   console.log(countryCode)
   //제대로 안 찍혀서 한번 찍어봤다. 
@@ -112,8 +112,9 @@ const priceTokrwFormat = (price,country) => {
 // console.log(pricekformat(25000) , "kr"
 console.log(priceTokrwFormat(100000,"kr"))
 console.log(priceTokrwFormat(40000,"en"))
+console.log(priceTokrwFormat(300000,"kr"))
 
 //전체 뽑을 때 사용하는 함수 완성 
 
 //함수에 익숙해져야 하는 이유는 많다 
-
+//추가기능 연습해보기 
