@@ -45,34 +45,55 @@
 // console.log(originalPrice2)
 // 비효율적이기 때문에 이 것을 기능으로 만들어야 한다. 함수로 빼면 된다. 그런데 어떻게 할 것인가? 가격만 넣으면 콘솔로그에 찍었던 것이 나오게끔 해야한다. 
 
-const currencyBycountry = {
+// const currencyBycountry = {
 
-en: {
-  format : "en-US",
-  currency : "USD"
-},  
-kr: {
-  format : "kr-KO",
-  currency : "KRW"
-}
+// en: {
+//   format : "en-US",
+//   currency : "USD"
+// },  
+// kr: {
+//   format : "kr-KO",
+//   currency : "KRW"
+// }
 
 
-}
+// }
 // const Tprice 
 // let countryCode = country | "kr"
-const cur = currencyBycountry[country]
-console.log(cur)
-const pricekformat = (price,country) => {
+// const cur = currencyBycountry[country]
+// console.log(cur)
+
+//이 함수를 사용해서 지역코드를 들어갈 수 있다. 
+const currencyBycountry = {
+  en: {
+    format: "en-US", 
+    currency:"USD"
+  },
+  kr: {
+    format: "kr-KO",
+    currency:"KRW"
+
+  }
+}
+
+const priceTokrwFormat = (price,country) => {
+  // 이 화살표함수는 프라이스와 컨트리를 두 개의 값을 가지고 놀 것이다. 
+  const countryCode = country || "kr"
+  console.log(countryCode)
+  //제대로 안 찍혀서 한번 찍어봤다. 
+  const cur = currencyBycountry[countryCode]
+  //간편하게 cur로 줄였다. 
+  // console.log(cur)
   const pricekrw = new Intl.NumberFormat(cur.format, { style: 'currency', currency: cur.currency}).format(price)
 
   let tax = price / 11 * 10
       tax = Math.round(tax)
-      tax = new Intl.NumberFormat(cur.format, { style: 'currency', currency: cur.currency }).format(tax)
+      tax = new Intl.NumberFormat(cur.format, { style: 'currency', currency: cur.currency}).format(tax)
       // tax = tax + "원"
 
   let originalPrice = price / 11
       originalPrice =  Math.round(originalPrice)
-      originalPrice = new Intl.NumberFormat(cur.format, { style: 'currency', currency: cur.currency }).format(originalPrice)
+      originalPrice = new Intl.NumberFormat(cur.format, { style: 'currency', currency: cur.currency}).format(originalPrice)
       // originalPrice = originalPrice + "원"
 
       return {
@@ -82,12 +103,17 @@ const pricekformat = (price,country) => {
       }
 
 }
-
-// console.log(pricekformat(10000))
-// console.log(Tprice)
+// const price = 10000
+// console.log(priceTokrwFormat(price))
+// console.log(price)
 
 // const price = 100000
 // console.log(pricekformat(price))
-// // console.log(pricekformat(25000) , "kr"
-// console.log(pricekformat(price))
-// console.log(pricekformat(price))
+// console.log(pricekformat(25000) , "kr"
+console.log(priceTokrwFormat(100000,"kr"))
+console.log(priceTokrwFormat(40000,"en"))
+
+//전체 뽑을 때 사용하는 함수 완성 
+
+//함수에 익숙해져야 하는 이유는 많다 
+
