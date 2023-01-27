@@ -9,10 +9,10 @@ const cookieParser = require("cookie-parser")
 // app.use(cookieParser())
 app.use(cors())
 
-// const movies = require("./src/models/movies")
+const movies = require("./src/models/movies")
 
 const users = require("./src/models/users")
-const getM = require('/src/repositories/movies')
+const { getMovieById,getM, increasedHitCount} = require('./src/repositories/movies')
 
 // 연습용 더미데이터 +80개 추가 
 
@@ -33,7 +33,18 @@ app.get('/movies', (req, res) => {
 // console.log(page)
 
 const page = null 
-const movies = getM(page)
+const {movies,dividepage}= getM(page)
+
+// console.log(getM)
+// console.log(movies)
+
+res.send({
+  pageInfo: {
+      dividepage: 1 } ,
+  movies:movies
+
+  })
+})
 
 // const cloneMovies = [...movies] 
 // const dividepage = Math.ceil(movies.length / 10)
@@ -72,18 +83,18 @@ const movies = getM(page)
 // console.log("마지막페이지:", Lpage)
   //res.send는 가장 마지막에 쓴다. 결괏값을 제출하는 것이기 때문에 이것을 앞 줄에 실행해버리면 그 다음 명령은 읽지 못한다.  
   // res.send(sortlist)
-res.send({
-  pageInfo : {
-    dividepage
-  },
-  movies: paginationMovies
-  ,movies : sortlist
+// res.send({
+//   pageInfo : {
+//     dividepage
+//   },
+//   movies: paginationMovies
+//   ,movies : sortlist
 
 
-})
+// })
 
 
-})
+// })
 
 // 1. 사용자가 등록할 영화의 정보를 주면 받아온다 from 요청 (req)
 // 2. 가져온 영화정보에 id 를 부여한다.
@@ -122,27 +133,30 @@ app.post('/movies', (req, res) => {
 
 app.get("/movies/:id", (req,res)=> {
   
-
-  const id = req.params.id
+const {id} = req.params
+  // const id = req.params.id
   // 1. 사용자가 보내준 id를 가져온다. 
-  console.log(id)
+  // console.log(id)
 // 2. id에 해당하는 movies를 가져온다. 
-  const getobj =  movies.find(movie => {return movie.id ===   Number(id) })
+const selectedMovie = getMovieById(id)
+const increasedMovie = increaseHitcount(selectedMovie)
+res.send(increasedMovie)
+  // const getobj =  movies.find(movie => {return movie.id ===   Number(id) })
   // 파람스를 통해 지정해준 숫자를 가져오는 구문 
   //NUM는 형 변환을 시킨 것이다. params로 가져오는 데이터 값은 string인데 num을 써서 int로 바꿔준것이다. 
   // console.log(getobj)
 
   //3. 가져온 movies에서 hit_count 1을 더한 객체를 만든다
 
-  getobj.hit_count = getobj.hit_count +1
+  // getobj.hit_count = getobj.hit_count +1
 
   // console.log(getobj)
 
   //4. 히트카운트 1을 더한 객체를 무비스 내에서 기존 객체에 치환한다. 
 
-  const movieindex = movies.findIndex(movie => movie.id === Number(id))
+  // const movieindex = movies.findIndex(movie => movie.id === Number(id))
 
-  movies.splice(movieindex,1,getobj)
+  // movies.splice(movieindex,1,getobj)
   /// 배열. splice(작업 위치, 위치로부터 몇 칸 이동했냐, 끼워넣을 것 )
   // 무비스에서 무비인덱스에서 작업하고 위치로부터 1칸이고 getobj로 새로 교체해라 
 
@@ -150,7 +164,7 @@ app.get("/movies/:id", (req,res)=> {
 
   ///5. hit_count 1을 더한 객체를 반환한다. 
 
-  res.send(getobj)
+  // res.send(getobj)
 
   // console.log(movieindex)
 

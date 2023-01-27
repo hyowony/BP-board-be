@@ -7,7 +7,8 @@
 // 7.함수 호출하기
 // 8. app.js 
 const movies = require("../models/movies")
-
+// 임시 데이터가 모델스/무비스에 있으니까 가져오는 것이다. 
+const users = require("../models/users")
 function getM(page) {
 
   const cloneMovies = [...movies] 
@@ -38,7 +39,37 @@ function getM(page) {
   }
 }
 
-module.exports = getM
-//getM 함수를 내보내주고 있다. 
+function getMovieById(id) {
+  // selectedMovies=  movies.find(movie => movie.id === Number(id))
+  return movies.find(movie => movie.id === Number(id))
+//갖고 와서 조회수를 하나씩 올려주고 있다. 이러면 함수가 두 가지 일을 하는 것이니 좋지는 않다. 심미적인 코드를 만드려면 하나의 함수 = 하나의 기능만 담당하는게 좋다. 
+  // const movieTorReplace = {
+  //   ...selectedMovies,
+  //   hit_count : selectedMovies.hit_count +1
+  // }
+
+  // const targetIndex = movies.findIndex(movie => movie.id === Number(id))
+  // return movies.splice(targetIndex,1, movieTorReplace)
+
+}
+function increaseHitCount(movies) {
+  const movieTorReplace = {
+    ...Movies,
+    hit_count : selectedMovies.hit_count +1
+  }
+  const targetIndex = movies.findIndex(movie => movie.id === Number(id))
+  return movies.splice(targetIndex,1, movieTorReplace)
+
+}
+
+module.exports = 
+{ getM : getM,
+  getMovieById: getMovieById,
+  increaseHitCount: increaseHitCount
+
+}
+//getM, getmid, 조회수 증가 함수를 내보내주고 있다. 
+//함수를 여러개로 내보내고 싶을 때는 오브젝트로 만든다. 
+//하나의 함수는 하나의 역할만 담당하는게 좋다. 
 
 

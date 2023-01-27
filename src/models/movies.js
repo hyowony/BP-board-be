@@ -1,9 +1,4 @@
 
-
-
-
-
-
 module.exports = [
   {id: 1, movie_title: "Misérables, Les", hit_count: 23, user_id: 1, created_at: "2022-08-11 00:40:32"},
   {id: 2, movie_title: "she's gone ", hit_count: 62, user_id: 2, created_at: "2022-08-18 16:43:05"},
