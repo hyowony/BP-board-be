@@ -9,8 +9,10 @@ const cookieParser = require("cookie-parser")
 // app.use(cookieParser())
 app.use(cors())
 
-const movies = require("./src/models/movies")
+// const movies = require("./src/models/movies")
+
 const users = require("./src/models/users")
+const getM = require('/src/repositories/movies')
 
 // 연습용 더미데이터 +80개 추가 
 
@@ -27,35 +29,39 @@ app.use(cookieParser())
 
 app.get('/movies', (req, res) => {
  
-const page = req.query.page || 1
-console.log(page)
-const cloneMovies = [...movies] 
-const dividepage = Math.ceil(movies.length / 10)
-const startIndex = (page - 1) * 10
-const paginationMovies = cloneMovies.splice(startIndex,10)
+// const page = req.query.page || 1
+// console.log(page)
 
-// console.log("startindex:",startIndex)
-// console.log("lastPage:",dividepage)
+const page = null 
+const movies = getM(page)
+
+// const cloneMovies = [...movies] 
+// const dividepage = Math.ceil(movies.length / 10)
+// const startIndex = (page - 1) * 10
+// const paginationMovies = cloneMovies.splice(startIndex,10)
+
+// // console.log("startindex:",startIndex)
+// // console.log("lastPage:",dividepage)
   
-// const pagenationMovies = movies.splice(0,10,[])
+// // const pagenationMovies = movies.splice(0,10,[])
 
-  const sortlist = paginationMovies.map(movie => ({
-    ...movie,
-    //1. 영화 전체 목록을 순회한다. 
-    name: users.find(user => user.id === movie.user_id).name
-    // 2. 순회하면서  영화 제목 작성자에 user_id에 해당하는 user를 users에서 검색한다. 
-    // 3  2번에 일치하는 user의 name만 가져온다. 
-    // 4.  가져온 name을 순회중인 movies의 name property에 추가한다. 
-  }))
-//내림차순으로 정렬한다. 정렬할 때 sort를 쓴다. 
-  sortlist.sort ((a,b) => {
-    const preTs = new Date(a.created_at).getTime()
-    const curTs = new Date(b.created_at).getTime()
+//   const sortlist = paginationMovies.map(movie => ({
+//     ...movie,
+//     //1. 영화 전체 목록을 순회한다. 
+//     name: users.find(user => user.id === movie.user_id).name
+//     // 2. 순회하면서  영화 제목 작성자에 user_id에 해당하는 user를 users에서 검색한다. 
+//     // 3  2번에 일치하는 user의 name만 가져온다. 
+//     // 4.  가져온 name을 순회중인 movies의 name property에 추가한다. 
+//   }))
+// //내림차순으로 정렬한다. 정렬할 때 sort를 쓴다. 
+//   sortlist.sort ((a,b) => {
+//     const preTs = new Date(a.created_at).getTime()
+//     const curTs = new Date(b.created_at).getTime()
 
-    // console.log(preTs, "/", curTs)
+//     // console.log(preTs, "/", curTs)
 
-    return curTs - preTs
-  });
+//     return curTs - preTs
+//   });
 // const Lpage = movies.length / 10
 // const dividepage = Math.ceil(movies.length / 10)
 // const startIndex = (page-1) * 10
